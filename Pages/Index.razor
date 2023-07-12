@@ -1,7 +1,56 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Retirement Calculator</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Reserve Retirement Calculator</h1>
 
-Welcome to your new app.
+<EditForm Model="@serviceParameters" OnValidSubmit="@HandleValidSubmit">
+    <label>
+        Retirement System:
+        <InputRadioGroup @bind-Value="serviceParameters.RetirementSystem">
+            <InputRadio Value="RetirementSystem.High3" />High 3
+            <InputRadio Value="RetirementSystem.BlendedRetirementSystem" />Blended Retirement System
+        </InputRadioGroup>
+    </label>
+
+    <label>
+        Years of Service:
+        <InputSelect @bind-Value="serviceParameters.YearsOfService" class="border-solid border-2 rounded-md border-amber-300">
+            <option value="">Select Years of Service...</option>
+            @for(int i = 20; i < 43; i++) {
+                <option value="@i">@i</option>
+            }
+        </InputSelect>
+    </label>
+
+    <label>
+        Highest Rank Held:
+        <InputSelect @bind-Value="serviceParameters.Rank">
+            <option value="">Select Rank...</option>
+        </InputSelect>
+    </label>
+
+
+</EditForm>
+
+@code {
+    private ServiceParameters serviceParameters = new();
+
+    private void HandleValidSubmit()
+    {
+
+    }
+
+    private class ServiceParameters
+    {
+        public RetirementSystem RetirementSystem { get; set; }
+        public int YearsOfService { get; set; }
+        public int Rank { get; set; }
+    }
+
+    public enum RetirementSystem
+    {
+        High3,
+        BlendedRetirementSystem,
+    }
+}
